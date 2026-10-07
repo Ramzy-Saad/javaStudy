@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.School;
 
+import com.example.demo.Student.Student;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 

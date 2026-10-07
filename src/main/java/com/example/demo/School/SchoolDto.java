@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.School;
 
 public record SchoolDto(
         String name
