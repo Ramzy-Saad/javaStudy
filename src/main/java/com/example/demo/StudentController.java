@@ -21,17 +21,17 @@ public class StudentController {
     }
 
     @GetMapping("students")
-    public List<Student> findStudents(){
+    public List<StudentResponseDto> findStudents(){
         return studentService.findStudents();
     }
 
     @GetMapping("students/{student-id}")
-    public Student findStudentById( @PathVariable("student-id") Integer id){
+    public StudentResponseDto findStudentById( @PathVariable("student-id") Integer id){
         return studentService.findStudentById(id);
     }
 
     @PutMapping("students/{student-id}")
-    public Student updateStudentById( @PathVariable("student-id") Integer id,@RequestBody Student updatedStudent){
+    public StudentResponseDto updateStudentById( @PathVariable("student-id") Integer id,@RequestBody Student updatedStudent){
         return studentService.updateStudentById(id, updatedStudent);
     }
 
@@ -42,7 +42,7 @@ public class StudentController {
     }
 
     @GetMapping("students/search/{student-name}")
-    public List<Student> findStudentByName (@PathVariable("student-name") String name){
+    public List<StudentResponseDto> findStudentByName (@PathVariable("student-name") String name){
         return studentService.findStudentByName(name);
     }
 

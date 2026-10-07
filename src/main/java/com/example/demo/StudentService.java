@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -24,30 +25,39 @@ public class StudentService {
         return studentMapper.toStudentResponseDto(studentRepo);
     }
 
-    public List<Student> findStudents(){
-        return repository.findAll();
+    public List<StudentResponseDto> findStudents(){
+        return repository.findAll()
+                .stream()
+                .map(studentMapper::toStudentResponseDto)
+                .collect(Collectors.toList());
     }
 
-    public Student findStudentById(Integer id){
-        return repository.findById(id).orElse(new Student());
+    public StudentResponseDto findStudentById(Integer id){
+        return repository.findById(id)
+                .map(studentMapper::toStudentResponseDto)
+                .orElse(null);
     }
 
-    public Student updateStudentById( Integer id,Student updatedStudent){
+    public StudentResponseDto updateStudentById( Integer id,Student updatedStudent){
         Student student = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         student.setFirstname(updatedStudent.getFirstname());
         student.setLastname(updatedStudent.getLastname());
         student.setEmail(updatedStudent.getEmail());
         student.setAge(updatedStudent.getAge());
-        return repository.save(student);
+        Student savedStudent = repository.save(student);
+        return studentMapper.toStudentResponseDto(savedStudent);
     }
 
     public void deleteStudentById(Integer id){
         repository.deleteById(id);
     }
 
-    public List<Student> findStudentByName (String name){
-        return repository.findAllByFirstnameContaining(name);
+    public List<StudentResponseDto> findStudentByName (String name){
+        return repository.findAllByFirstnameContaining(name)
+                .stream()
+                .map(studentMapper::toStudentResponseDto)
+                .collect(Collectors.toList());
     }
 
 
